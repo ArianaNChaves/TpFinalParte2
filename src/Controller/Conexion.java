@@ -20,7 +20,7 @@ public class Conexion {
     private static final String URL = "jdbc:mysql://localhost/";
     private static final String USUARIO = "root";
     private static final String PASSWORD = "";
-    private static final String DATABASE_NAME = "dbfravemax";
+    private static final String DATABASE_NAME = "dbfravemax_1";
     
     private static Connection connection;
 

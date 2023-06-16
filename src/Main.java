@@ -42,19 +42,19 @@ public class Main {
         clienteData.guardarCliente(cliente);
         System.out.println(clienteData.buscarCliente(1));
         
-        Producto producto = new Producto("Shampoo", 50d, 1,1);
+        Producto producto = new Producto("Shampoo", 50d, 1, true);
         productoData.guardarProducto(producto);
         Venta venta = new Venta(Date.valueOf(date), cliente);
         ventaData.guardarVenta(venta);
-        DetalleVenta detalleVenta = new DetalleVenta(1,50d,venta,producto);
-        detalleVentaData.guardarDetalleVenta(detalleVenta);
+        //DetalleVenta detalleVenta = new DetalleVenta(1,50d,venta,producto);
+    //    detalleVentaData.guardarDetalleVenta(detalleVenta);
         
         Proveedor proveedor = new Proveedor("razonSocial", "Lavalle 100", "12345678");
         proveedorData.guardarProveedor(proveedor);
         Compra compra = new Compra(proveedor, Date.valueOf(date));
         compraData.guardarCompra(compra);
-        DetalleCompra detalleCompra = new DetalleCompra(2, 30d, compra, producto);
-        detalleCompraData.guardarDetalleCompra(detalleCompra);
+        //DetalleCompra detalleCompra  DetalleCompra(2, 30d, compra, producto);
+       // detalleCompraData.guardarDetall= neweCompra(detalleCompra);
         
         
     }

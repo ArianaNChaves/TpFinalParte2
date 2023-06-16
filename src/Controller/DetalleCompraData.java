@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -25,13 +26,13 @@ public class DetalleCompraData {
     }
     
     public void guardarDetalleCompra(DetalleCompra detalleCompra){
-    String sql = "INSERT INTO detalleCompra (cantidad, precioCosto, idCompra, idProducto) VALUES (?, ?, ?, ?)";
+    String sql = "INSERT INTO detalleCompra (cantidad, precioCosto, idCompra, idProducto) VALUES (?, ?, ?, ?);";
     try{
         PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ps.setInt(1, detalleCompra.getCantidad());
         ps.setDouble(2, detalleCompra.getPrecioCosto());
-        ps.setInt(3, detalleCompra.getIdCompra().getIdCompra());
-        ps.setInt(4, detalleCompra.getIdProducto().getIdProducto());
+        ps.setInt(3, detalleCompra.getIdCompra());
+        ps.setInt(4, detalleCompra.getIdProducto());
         ps.executeUpdate();
         
         ResultSet rs = ps.getGeneratedKeys();
@@ -46,6 +47,7 @@ public class DetalleCompraData {
         
     }catch(SQLException ex){
       //En la vista va un cartelito que diga "no se puedo ejecutar la consulta"
+                 JOptionPane.showMessageDialog(null, ex);
     }
    
 }

@@ -12,43 +12,42 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Ariana
  */
 public class DetalleVentaData {
+
     private Connection connection;
+    //private VentaData ventaData;
 
     public DetalleVentaData() {
         connection = Conexion.getConnection();
     }
-    
-    public void guardarDetalleVenta(DetalleVenta detalleVenta){
-    String sql = "INSERT INTO detalleVenta (cantidad, precioVenta, idVenta, idProducto) VALUES (?, ?, ?, ?)";
-    try{
-        PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-        ps.setInt(1, detalleVenta.getCantidad());
-        ps.setDouble(2, detalleVenta.getPrecioVenta());
-        ps.setInt(3, detalleVenta.getIdVenta().getIdVenta());
-        ps.setInt(4, detalleVenta.getIdProducto().getIdProducto());
-        ps.executeUpdate();
-        
-        ResultSet rs = ps.getGeneratedKeys();
-        if (rs.next()) {
-            //Esto va en la vista, debe ir un cartelito que diga "si se creo la detalleventa"
-            detalleVenta.setIdDetalleVenta(rs.getInt(1));
-        }else{
-            //Esto va en la vista, debe ir un cartelito de "no se creo la detalleventa"
+
+    public void guardarDetalleVenta(DetalleVenta detalleVenta) {
+         String sql = "INSERT INTO detalleventa (cantidad, PrecioVenta, idVenta, idProducto) VALUES (?, ?, ?, ?);";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, detalleVenta.getCantidad());
+            ps.setDouble(2, detalleVenta.getPrecioVenta());
+            ps.setInt(3, detalleVenta.getIdVenta());
+            ps.setInt(4, detalleVenta.getIdProducto());
+            ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                detalleVenta.setIdDetalleVenta(rs.getInt(1));
+            } else {
+
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            //En la vista va un cartelito que diga "no se puedo ejecutar la consulta"
+            JOptionPane.showMessageDialog(null, "no se pudo agregar, excepcion: " + ex);
         }
-        ps.close();
-        
-        
-    }catch(SQLException ex){
-      //En la vista va un cartelito que diga "no se puedo ejecutar la consulta"
+
     }
-   
-}
-    
-    
+
 }
