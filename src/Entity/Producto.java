@@ -10,16 +10,17 @@ package Entity;
  * @author Ariana
  */
 public class Producto {
+
     private int idProducto;
     private String descripcion;
     private double precioActual;
     private int stock;
-    private int estado;
+    private boolean estado;
 
     public Producto() {
     }
 
-    public Producto(int idProducto, String descripcion, double precioActual, int stock, int estado) {
+    public Producto(int idProducto, String descripcion, double precioActual, int stock, boolean estado) {
         this.idProducto = idProducto;
         this.descripcion = descripcion;
         this.precioActual = precioActual;
@@ -27,7 +28,7 @@ public class Producto {
         this.estado = estado;
     }
 
-    public Producto(String descripcion, double precioActual, int stock, int estado) {
+    public Producto(String descripcion, double precioActual, int stock, boolean estado) {
         this.descripcion = descripcion;
         this.precioActual = precioActual;
         this.stock = stock;
@@ -66,14 +67,17 @@ public class Producto {
         this.stock = stock;
     }
 
-    public int getEstado() {
+    public boolean getEstado() {
         return estado;
     }
 
-    public void setEstado(int estado) {
+    public void setEstado(boolean estado) {
         this.estado = estado;
     }
-    
-    
-    
+
+    @Override
+    public String toString() {
+        return descripcion + " Stock: " + stock;
+    }
+
 }

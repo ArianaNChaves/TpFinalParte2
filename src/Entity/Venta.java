@@ -6,12 +6,14 @@
 package Entity;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 /**
  *
  * @author Ariana
  */
 public class Venta {
+
     private int idVenta;
     private Date fecha;
     private Cliente idCliente;
@@ -53,7 +55,5 @@ public class Venta {
     public void setIdCliente(Cliente idCliente) {
         this.idCliente = idCliente;
     }
-    
-    
-    
+
 }

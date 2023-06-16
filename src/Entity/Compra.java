@@ -53,6 +53,11 @@ public class Compra {
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
+
+    @Override
+    public String toString() {
+        return idProveedor + ", fecha=" + fecha ;
+    }
     
     
     

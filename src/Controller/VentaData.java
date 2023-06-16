@@ -9,6 +9,7 @@ import Entity.Cliente;
 import Entity.Producto;
 import Entity.Venta;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,13 +31,12 @@ public class VentaData {
     }
     
     public void guardarVenta(Venta venta){
-    String sql = "INSERT INTO venta (fecha, idCliente) VALUES (?, ?)";
+    String sql = "INSERT INTO venta (fecha, idCliente) VALUES (?,?);";
     try{
         PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ps.setDate(1, venta.getFecha());
         ps.setInt(2, venta.getIdCliente().getIdCliente());
         ps.executeUpdate();
-        
         ResultSet rs = ps.getGeneratedKeys();
         if (rs.next()) {
             //Esto va en la vista, debe ir un cartelito que diga "si se creo la venta"
@@ -56,7 +56,7 @@ public class VentaData {
 
         List<Venta> ventas = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM venta";
+            String sql = "SELECT fecha, idCliente FROM venta WHERE 1;";
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {

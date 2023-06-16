@@ -6,47 +6,52 @@
 package Controller;
 
 import Entity.Compra;
+import Entity.Proveedor;
 import Entity.Venta;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Ariana
  */
 public class CompraData {
-    private Connection connection;
 
+    private Connection connection;
+    //private ProveedorData proveedorData;
     public CompraData() {
         connection = Conexion.getConnection();
+       // proveedorData= new ProveedorData();
     }
-    
-    public void guardarCompra(Compra compra){
-    String sql = "INSERT INTO compra (fecha, idProveedor) VALUES (?, ?)";
-    try{
-        PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-        ps.setDate(1, compra.getFecha());
-        ps.setInt(2, compra.getIdProveedor().getIdProveedor());
-        ps.executeUpdate();
-        
-        ResultSet rs = ps.getGeneratedKeys();
-        if (rs.next()) {
-            //Esto va en la vista, debe ir un cartelito que diga "si se creo la compra"
-            compra.setIdCompra(rs.getInt(1));
-        }else{
-            //Esto va en la vista, debe ir un cartelito de "no se creo la compra"
+
+    public void guardarCompra(Compra compra) {
+        String sql = "INSERT INTO compra (fecha, idProveedor) VALUES (?, ?);";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setDate(1, compra.getFecha());
+            ps.setInt(2, compra.getIdProveedor().getIdProveedor());
+            ps.executeUpdate();
+
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                //Esto va en la vista, debe ir un cartelito que diga "si se creo la compra"
+                compra.setIdCompra(rs.getInt(1));
+            } else {
+                //Esto va en la vista, debe ir un cartelito de "no se creo la compra"
+            }
+            ps.close();
+
+        } catch (SQLException ex) {
+            //En la vista va un cartelito que diga "no se puedo ejecutar la consulta"
+            JOptionPane.showMessageDialog(null, ex);
         }
-        ps.close();
-        
-        
-    }catch(SQLException ex){
-      //En la vista va un cartelito que diga "no se puedo ejecutar la consulta"
+
     }
-    
-}
-    
-    
+
 }
