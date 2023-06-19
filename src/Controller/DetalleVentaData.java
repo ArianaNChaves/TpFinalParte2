@@ -33,8 +33,8 @@ public class DetalleVentaData {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, detalleVenta.getCantidad());
             ps.setDouble(2, detalleVenta.getPrecioVenta());
-            ps.setInt(3, detalleVenta.getIdVenta());
-            ps.setInt(4, detalleVenta.getIdProducto());
+            ps.setInt(3, detalleVenta.getIdVenta().getIdVenta());
+            ps.setInt(4, detalleVenta.getIdProducto().getIdProducto());
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {

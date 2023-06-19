@@ -96,6 +96,30 @@ public class ProveedorData {
         }
         return provedor;
     }
+    public Proveedor buscarProveedorPorId(int id) {
+        Proveedor proveedor = new Proveedor();
+        String sql = "SELECT * FROM proveedor WHERE idProveedor = ?";
+        PreparedStatement ps = null;
+        try {
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                proveedor.setRazonSocial(rs.getString("razonSocial"));
+                proveedor.setIdProveedor(id);
+                proveedor.setDomicilio(rs.getString("domicilio"));
+                proveedor.setTelefono(rs.getString("telefono"));
+            } else {
+
+                JOptionPane.showMessageDialog(null, "Proveedor no existente.");
+
+            }
+            ps.close();
+        } catch (SQLException ex) {
+
+        }
+        return proveedor;
+    }
     
         public List<Proveedor> mandarProveedor() {
         List<Proveedor> proveedores = new ArrayList<>();

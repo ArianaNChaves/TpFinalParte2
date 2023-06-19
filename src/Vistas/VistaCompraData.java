@@ -178,7 +178,7 @@ public class VistaCompraData extends javax.swing.JInternalFrame {
         productoData.actualizarProducto(p);
 
         compraData.guardarCompra(compraRealizada);
-        DetalleCompra detaCompra = new DetalleCompra(cant, precio, idc, idp);
+        DetalleCompra detaCompra = new DetalleCompra(cant, precio, compraData.buscarCompra(idc), productoData.buscarProducto(idp));
         System.out.println(detaCompra);
         detalleCompraData.guardarDetalleCompra(detaCompra);
 

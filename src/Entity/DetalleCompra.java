@@ -13,25 +13,25 @@ public class DetalleCompra {
     private int idDetalle;
     private int cantidad;
     private double precioCosto;
-    private int idCompra;
-    private int idProducto;
+    private Compra compra;
+    private Producto producto;
 
     public DetalleCompra() {
     }
 
-    public DetalleCompra(int idDetalle, int cantidad, double precioCosto, int idCompra, int idProducto) {
+    public DetalleCompra(int idDetalle, int cantidad, double precioCosto, Compra idCompra, Producto idProducto) {
         this.idDetalle = idDetalle;
         this.cantidad = cantidad;
         this.precioCosto = precioCosto;
-        this.idCompra = idCompra;
-        this.idProducto = idProducto;
+        this.compra = idCompra;
+        this.producto = idProducto;
     }
 
-    public DetalleCompra(int cantidad, double precioCosto, int idCompra, int idProducto) {
+    public DetalleCompra(int cantidad, double precioCosto, Compra idCompra, Producto idProducto) {
         this.cantidad = cantidad;
         this.precioCosto = precioCosto;
-        this.idCompra = idCompra;
-        this.idProducto = idProducto;
+        this.compra = idCompra;
+        this.producto = idProducto;
     }
 
     public int getIdDetalle() {
@@ -58,25 +58,25 @@ public class DetalleCompra {
         this.precioCosto = precioCosto;
     }
 
-    public int getIdCompra() {
-        return idCompra;
+    public Compra getIdCompra() {
+        return compra;
     }
 
-    public void setIdCompra(int idCompra) {
-        this.idCompra = idCompra;
+    public void setIdCompra(Compra idCompra) {
+        this.compra = idCompra;
     }
 
-    public int getIdProducto() {
-        return idProducto;
+    public Producto getIdProducto() {
+        return producto;
     }
 
-    public void setIdProducto(int idProducto) {
-        this.idProducto = idProducto;
+    public void setIdProducto(Producto idProducto) {
+        this.producto = idProducto;
     }
 
     @Override
     public String toString() {
-        return cantidad + ", idProducto=" + idProducto;
+        return cantidad + ", idProducto=" + producto.getDescripcion();
     }
     
     

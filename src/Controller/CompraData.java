@@ -6,6 +6,7 @@
 package Controller;
 
 import Entity.Compra;
+import Entity.Producto;
 import Entity.Proveedor;
 import Entity.Venta;
 import java.sql.Connection;
@@ -24,6 +25,7 @@ import javax.swing.JOptionPane;
 public class CompraData {
 
     private Connection connection;
+    private ProveedorData proveedorData;
     //private ProveedorData proveedorData;
     public CompraData() {
         connection = Conexion.getConnection();
@@ -52,6 +54,30 @@ public class CompraData {
             JOptionPane.showMessageDialog(null, ex);
         }
 
+    }
+    public Compra buscarCompra(int id) {
+        Compra compra = new Compra();
+        String sql = "SELECT * FROM compra WHERE idCompra = ?";
+        PreparedStatement ps = null;
+        try {
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                compra.setIdCompra(rs.getInt("idCompra"));
+                compra.setIdProveedor(proveedorData.buscarProveedorPorId(rs.getInt("idProveedor")));
+                compra.setFecha(rs.getDate("fecha"));
+                
+
+            } else {
+                //en vistas, cartelito que diga "no se pudo buscar el producto" o "no existe el producto"
+            }
+            ps.close();
+
+        } catch (SQLException ex) {
+            //cartelito "error en buscar producto"
+        }
+        return compra;
     }
 
 }
