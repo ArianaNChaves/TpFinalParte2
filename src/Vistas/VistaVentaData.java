@@ -300,7 +300,7 @@ public class VistaVentaData extends javax.swing.JInternalFrame {
             Venta ventaRealizada = new Venta(Date.valueOf(fecha), c);
             ventaData.guardarVenta(ventaRealizada);
             int idv = ventaRealizada.getIdVenta();
-            DetalleVenta detaventa = new DetalleVenta(cant, subtotal, ventaData.buscarVenta(idv), productoData.buscarProducto(idp));
+            DetalleVenta detaventa = new DetalleVenta(cant, subtotal, ventaRealizada, productoData.buscarProducto(idp));
             System.out.println(detaventa);
             detalleVentaData.guardarDetalleVenta(detaventa);
         }

@@ -32,7 +32,7 @@ public class CompraData {
        // proveedorData= new ProveedorData();
     }
 
-    public void guardarCompra(Compra compra) {
+    public Compra guardarCompra(Compra compra) {
         String sql = "INSERT INTO compra (fecha, idProveedor) VALUES (?, ?);";
         try {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -53,7 +53,7 @@ public class CompraData {
             //En la vista va un cartelito que diga "no se puedo ejecutar la consulta"
             JOptionPane.showMessageDialog(null, ex);
         }
-
+        return compra;
     }
     public Compra buscarCompra(int id) {
         Compra compra = new Compra();
