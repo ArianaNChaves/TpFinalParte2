@@ -257,11 +257,14 @@ public class VistaClienteData extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btBorrarClienteActionPerformed
 
     private void btBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarClienteActionPerformed
-        try {
-            int id = Integer.parseInt(txtIdCliente.getText());
+        String idText = txtIdCliente.getText();
+
+        if (idText.matches("\\d+")) {
+            int id = Integer.parseInt(idText);
             Cliente cliente = clienteData.buscarCliente(id);
+
             if (cliente != null) {
-                txtIdCliente.setText(txtIdCliente.getText());
+                txtIdCliente.setText(idText);
                 txtNombre.setText(cliente.getNombre());
                 txtApellido.setText(cliente.getApellido());
                 txtDireccCliente.setText(cliente.getDomicilio());
@@ -269,10 +272,10 @@ public class VistaClienteData extends javax.swing.JInternalFrame {
             } else {
                 JOptionPane.showMessageDialog(null, "El cliente no existe");
             }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Ingrese un número válido para el ID del cliente");
-            txtIdCliente.setText("");
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingrese un valor numérico válido para el ID del cliente.");
         }
+
     }//GEN-LAST:event_btBuscarClienteActionPerformed
 
 
