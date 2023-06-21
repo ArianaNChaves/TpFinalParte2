@@ -210,7 +210,7 @@ public class VistaClienteData extends javax.swing.JInternalFrame {
         String domicilio = txtDireccCliente.getText();
         String telefono = txtTelefonoCliente.getText() + "";
 
-        if (ape.matches("[a-zA-Z]+") && nom.matches("[a-zA-Z]+") && domicilio.matches("[a-zA-Z]+") && telefono.matches("\\d+")) {
+        if (ape.matches("[a-zA-Z\\s]+") && nom.matches("[a-zA-Z\\s]+") && domicilio.matches("[a-zA-Z\\s\\d]+") && telefono.matches("\\d+")) {
             Cliente cliente = new Cliente(ape, nom, domicilio, telefono);
             clienteData.guardarCliente(cliente);
             txtIdCliente.setText(cliente.getIdCliente() + "");
@@ -232,7 +232,7 @@ public class VistaClienteData extends javax.swing.JInternalFrame {
             if (idText.matches("\\d+")) {
                 int id = Integer.parseInt(idText);
 
-                if (nom.matches("[a-zA-Z]+") && ape.matches("[a-zA-Z]+") && dom.matches("[a-zA-Z]+") && tel.matches("\\d+")) {
+                if (nom.matches("[a-zA-Z\\s]+") && ape.matches("[a-zA-Z\\s]+") && dom.matches("[a-zA-Z\\s\\d]+") && tel.matches("\\d+")) {
                     Cliente cliente = new Cliente(id, ape, nom, dom, tel);
                     clienteData.modificarCliente(cliente);
                 } else {

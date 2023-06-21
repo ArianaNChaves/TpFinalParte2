@@ -168,7 +168,7 @@ public class VistaProveedorCrear extends javax.swing.JInternalFrame {
         String direccion = txtDireccion.getText();
         String telefono = txtTelefono.getText();
 
-        if (razonSocial.matches("[a-zA-Z\\s]+") && direccion.matches("[a-zA-Z\\s]+")) {
+        if (razonSocial.matches("[a-zA-Z\\s]+") && direccion.matches("[a-zA-Z\\s\\d]+")) {
             Proveedor proveedor = new Proveedor(razonSocial, direccion, telefono);
             proveedorData.guardarProveedor(proveedor);
         } else {
@@ -186,7 +186,7 @@ public class VistaProveedorCrear extends javax.swing.JInternalFrame {
             String direccion = txtDireccion.getText();
             String telefono = txtTelefono.getText();
 
-            if (razonSocial.matches("[a-zA-Z\\s]+") && direccion.matches("[a-zA-Z\\s]+")) {
+            if (razonSocial.matches("[a-zA-Z\\s]+") && direccion.matches("[a-zA-Z\\s\\d]+")) {
                 Proveedor proveedor = new Proveedor(razonSocial, direccion, telefono);
                 proveedorData.modificarProveedor(proveedor);
             } else {
@@ -209,7 +209,7 @@ public class VistaProveedorCrear extends javax.swing.JInternalFrame {
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
         // TODO add your handling code here:
         String rSocial = txtBuscar.getText();
-        if (rSocial.matches("[a-zA-Z]+")) {
+        if (rSocial.matches("[a-zA-Z\\s]+")) {
             Proveedor provedor = proveedorData.buscarProveedor(rSocial);
             if (provedor != null) {
                 txtRazonSocial.setText(provedor.getRazonSocial());
