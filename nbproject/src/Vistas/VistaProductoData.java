@@ -225,24 +225,13 @@ public class VistaProductoData extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtCantidadActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        try {
-            String desc = txtDescripcionProduc.getText();
-            double precioProd = Double.parseDouble(txtPrecio.getText());
-            int cant = Integer.parseInt(txtCantidad.getText());
-
-            if (desc.matches("[a-zA-Z]+")) {
-                Producto producto = new Producto(desc, precioProd, cant, true);
-                productoData.guardarProducto(producto);
-                txtBuscarProducto.setText(String.valueOf(producto.getIdProducto()));
-            } else {
-                JOptionPane.showMessageDialog(null, "La descripción debe contener solo una palabra o letras");
-                txtDescripcionProduc.setText(""); 
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Ingrese valores numéricos válidos para el precio y la cantidad");
-            txtPrecio.setText("");
-            txtCantidad.setText("");
-        }
+        String desc = txtDescripcionProduc.getText();
+        double precioProd = Integer.parseInt(txtPrecio.getText());
+        int cant = Integer.parseInt(txtCantidad.getText());
+        //boolean activo = chEstado.isSelected();
+        Producto producto = new Producto(desc, precioProd, cant, true);
+        productoData.guardarProducto(producto);
+        txtBuscarProducto.setText(producto.getIdProducto() + "");
 
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
@@ -250,7 +239,6 @@ public class VistaProductoData extends javax.swing.JInternalFrame {
         txtDescripcionProduc.setText("");
         txtPrecio.setText("");
         txtCantidad.setText("");
-        JOptionPane.showMessageDialog(null, "Limpio!!");
     }//GEN-LAST:event_btLimpiarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed

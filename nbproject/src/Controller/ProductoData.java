@@ -135,7 +135,7 @@ public class ProductoData {
 
             ps.executeUpdate();
 
-
+            JOptionPane.showMessageDialog(null, "Se agrego stock.");
             ps.close();
         } catch (SQLException e) {
 
