@@ -8,6 +8,7 @@ import Controller.Conexion;
 import Controller.ProveedorData;
 import Entity.Proveedor;
 import java.sql.Connection;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -171,8 +172,16 @@ public class VistaProveedorCrear extends javax.swing.JInternalFrame {
         String razonSocial = txtRazonSocial.getText();
         String direccion = txtDireccion.getText();
         String telefono = txtTelefono.getText();
-        Proveedor porveedor = new Proveedor(razonSocial, direccion, telefono);
-        proveedorData.guardarProveedor(porveedor);
+
+        if (razonSocial.matches("[a-zA-Z]+") && direccion.matches("[a-zA-Z]+")) {
+            Proveedor proveedor = new Proveedor(razonSocial, direccion, telefono);
+            proveedorData.guardarProveedor(proveedor);
+        } else {
+            JOptionPane.showMessageDialog(null, "La razón social y la dirección deben contener solo una palabra o letras");
+            txtRazonSocial.setText("");
+            txtDireccion.setText("");
+        }
+
     }//GEN-LAST:event_btAgregarProvedorActionPerformed
 
     private void btModificarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btModificarProveedorActionPerformed
@@ -181,8 +190,15 @@ public class VistaProveedorCrear extends javax.swing.JInternalFrame {
             String razonSocial = txtRazonSocial.getText();
             String direccion = txtDireccion.getText();
             String telefono = txtTelefono.getText();
-            Proveedor proveedor = new Proveedor(razonSocial, direccion, telefono);
-            proveedorData.modificarProveedor(proveedor);
+
+            if (razonSocial.matches("[a-zA-Z]+") && direccion.matches("[a-zA-Z]+")) {
+                Proveedor proveedor = new Proveedor(razonSocial, direccion, telefono);
+                proveedorData.modificarProveedor(proveedor);
+            } else {
+                JOptionPane.showMessageDialog(null, "La razón social y la dirección deben contener solo una palabra o letras");
+                txtRazonSocial.setText("");
+                txtDireccion.setText("");
+            }
         }
 
     }//GEN-LAST:event_btModificarProveedorActionPerformed
@@ -193,6 +209,7 @@ public class VistaProveedorCrear extends javax.swing.JInternalFrame {
         txtDireccion.setText("");
         txtTelefono.setText("");
         txtBuscar.setText("");
+        JOptionPane.showMessageDialog(null, "Limpio!!");
     }//GEN-LAST:event_btLimpiarActionPerformed
 
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed

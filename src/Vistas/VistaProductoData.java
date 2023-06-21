@@ -60,8 +60,6 @@ public class VistaProductoData extends javax.swing.JInternalFrame {
         jLabel10 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jLabel8 = new javax.swing.JLabel();
-        chEstado = new javax.swing.JCheckBox();
         btLimpiar = new javax.swing.JButton();
 
         setClosable(true);
@@ -130,14 +128,6 @@ public class VistaProductoData extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jLabel8.setText("Estado");
-
-        chEstado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chEstadoActionPerformed(evt);
-            }
-        });
-
         btLimpiar.setText("Limpiar");
         btLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -179,20 +169,16 @@ public class VistaProductoData extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel8))
+                            .addComponent(jLabel6))
                         .addGap(21, 21, 21)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(chEstado)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtDescripcionProduc)
-                                    .addComponent(txtPrecio)
-                                    .addComponent(txtCantidad, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addComponent(btnRegistrar)
-                                .addGap(18, 18, 18)
-                                .addComponent(btLimpiar)))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtDescripcionProduc)
+                            .addComponent(txtPrecio)
+                            .addComponent(txtCantidad, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnRegistrar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btLimpiar)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -213,13 +199,8 @@ public class VistaProductoData extends javax.swing.JInternalFrame {
                     .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRegistrar)
                     .addComponent(btLimpiar))
-                .addGap(1, 1, 1)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addGap(1, 1, 1)
-                        .addComponent(jLabel2))
-                    .addComponent(chEstado))
+                .addGap(17, 17, 17)
+                .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel9)
                 .addGap(35, 35, 35)
@@ -244,13 +225,24 @@ public class VistaProductoData extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtCantidadActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        String desc = txtDescripcionProduc.getText();
-        double precioProd = Integer.parseInt(txtPrecio.getText());
-        int cant = Integer.parseInt(txtCantidad.getText());
-        boolean activo = chEstado.isSelected();
-        Producto producto = new Producto(desc, precioProd, cant, activo);
-        productoData.guardarProducto(producto);
-        txtBuscarProducto.setText(producto.getIdProducto() + "");
+        try {
+            String desc = txtDescripcionProduc.getText();
+            double precioProd = Double.parseDouble(txtPrecio.getText());
+            int cant = Integer.parseInt(txtCantidad.getText());
+
+            if (desc.matches("[a-zA-Z]+")) {
+                Producto producto = new Producto(desc, precioProd, cant, true);
+                productoData.guardarProducto(producto);
+                txtBuscarProducto.setText(String.valueOf(producto.getIdProducto()));
+            } else {
+                JOptionPane.showMessageDialog(null, "La descripción debe contener solo una palabra o letras");
+                txtDescripcionProduc.setText(""); 
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Ingrese valores numéricos válidos para el precio y la cantidad");
+            txtPrecio.setText("");
+            txtCantidad.setText("");
+        }
 
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
@@ -258,29 +250,16 @@ public class VistaProductoData extends javax.swing.JInternalFrame {
         txtDescripcionProduc.setText("");
         txtPrecio.setText("");
         txtCantidad.setText("");
-        chEstado.setEnabled(true);
+        JOptionPane.showMessageDialog(null, "Limpio!!");
     }//GEN-LAST:event_btLimpiarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         cargarProducto();
-//      int id = Integer.parseInt(txtBuscarProducto.getText());
-//       Producto producto = (Producto) productoData.buscarProducto(id);
-//        if(producto != null){
-//            txtBuscarProducto.setText(txtBuscarProducto.getText());
-//            txtDescripcionProduc.setText(producto.getDescripcion());
-//         txtPrecio.setText(producto.getPrecioActual()+"");
-//           txtCantidad.setText(producto.getStock()+"");
-//           chEstado.setSelected(producto.getEstado());
-//        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btConsultarInveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarInveActionPerformed
         consultarInventario();
     }//GEN-LAST:event_btConsultarInveActionPerformed
-
-    private void chEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chEstadoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chEstadoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -288,7 +267,6 @@ public class VistaProductoData extends javax.swing.JInternalFrame {
     private javax.swing.JButton btLimpiar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnRegistrar;
-    private javax.swing.JCheckBox chEstado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -296,7 +274,6 @@ public class VistaProductoData extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

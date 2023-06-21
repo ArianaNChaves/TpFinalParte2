@@ -41,13 +41,16 @@ public class ProveedorData {
             if (rs.next()) {
                 //Esto va en la vista, debe ir un cartelito que diga "si se creo el proveedor"
                 proveedor.setIdProveedor(rs.getInt(1));
+                JOptionPane.showMessageDialog(null, "Se agrego con exito el proveedor.");
             } else {
                 //Esto va en la vista, debe ir un cartelito de "no se creo el proveedor"
+                JOptionPane.showMessageDialog(null, "No se agrego al proveedor.");
             }
             ps.close();
 
         } catch (SQLException ex) {
             //En la vista va un cartelito que diga "no se puedo ejecutar la consulta"
+            JOptionPane.showMessageDialog(null, ex);
         }
 
     }

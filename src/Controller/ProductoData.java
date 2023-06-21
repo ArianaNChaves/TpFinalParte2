@@ -135,6 +135,7 @@ public class ProductoData {
 
             ps.executeUpdate();
 
+
             ps.close();
         } catch (SQLException e) {
 

@@ -17,6 +17,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -62,6 +63,7 @@ public class VistaCompraData extends javax.swing.JInternalFrame {
         cbProducto = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         txtPrecio = new javax.swing.JTextField();
+        btLimpiar = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -96,6 +98,13 @@ public class VistaCompraData extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Precio:");
 
+        btLimpiar.setText("LIMPIAR");
+        btLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btLimpiarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -118,12 +127,14 @@ public class VistaCompraData extends javax.swing.JInternalFrame {
                             .addComponent(txtPrecio)
                             .addComponent(jdFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(233, 233, 233)
-                        .addComponent(btSolicitar))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(197, 197, 197)
-                        .addComponent(jLabel1)))
-                .addContainerGap(190, Short.MAX_VALUE))
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(126, 126, 126)
+                        .addComponent(btSolicitar)
+                        .addGap(107, 107, 107)
+                        .addComponent(btLimpiar)))
+                .addContainerGap(171, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,9 +160,11 @@ public class VistaCompraData extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel4)
                     .addComponent(jdFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
-                .addComponent(btSolicitar)
-                .addGap(0, 84, Short.MAX_VALUE))
+                .addGap(44, 44, 44)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btSolicitar)
+                    .addComponent(btLimpiar))
+                .addGap(0, 74, Short.MAX_VALUE))
         );
 
         pack();
@@ -159,29 +172,41 @@ public class VistaCompraData extends javax.swing.JInternalFrame {
 
     private void btSolicitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSolicitarActionPerformed
         // TODO add your handling code here:
-        Producto p = (Producto) cbProducto.getSelectedItem();
-        Proveedor pro = (Proveedor) cbProveedor.getSelectedItem();
-        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-        String fecha = f.format(jdFecha.getDate()) + "";
-        Compra compraRealizada = new Compra(pro, Date.valueOf(fecha));
+        try {
+            Producto p = (Producto) cbProducto.getSelectedItem();
+            Proveedor pro = (Proveedor) cbProveedor.getSelectedItem();
+            SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+            String fecha = f.format(jdFecha.getDate()) + "";
+            Compra compraRealizada = new Compra(pro, Date.valueOf(fecha));
 
-        int idp = p.getIdProducto();
+            int idp = p.getIdProducto();
 
-        int cant = Integer.parseInt(txtCantidadProducto.getText());
-        double precio = Double.parseDouble(txtPrecio.getText());
-        int idc = compraRealizada.getIdCompra();
+            String cantidadText = txtCantidadProducto.getText();
+            String precioText = txtPrecio.getText();
 
-        int stockActual = p.getStock();
-        int stockActualizado = stockActual + cant;
+            if (cantidadText.matches("\\d+") && precioText.matches("\\d+(\\.\\d+)?")) {
+                int cant = Integer.parseInt(cantidadText);
+                double precio = Double.parseDouble(precioText);
+                int idc = compraRealizada.getIdCompra();
 
-        p.setStock(stockActualizado);
-        productoData.actualizarProducto(p);
+                int stockActual = p.getStock();
+                int stockActualizado = stockActual + cant;
 
-        Compra compraGuardada = compraData.guardarCompra(compraRealizada);
-        DetalleCompra detaCompra = new DetalleCompra(cant, precio, compraGuardada, productoData.buscarProducto(idp));
-        System.out.println(detaCompra);
-        detalleCompraData.guardarDetalleCompra(detaCompra);
+                p.setStock(stockActualizado);
+                productoData.actualizarProducto(p);
 
+                Compra compraGuardada = compraData.guardarCompra(compraRealizada);
+                DetalleCompra detaCompra = new DetalleCompra(cant, precio, compraGuardada, productoData.buscarProducto(idp));
+                System.out.println(detaCompra);
+                detalleCompraData.guardarDetalleCompra(detaCompra);
+
+                JOptionPane.showMessageDialog(null, "Se agregó stock.");
+            } else {
+                JOptionPane.showMessageDialog(null, "Ingrese valores válidos para la cantidad y el precio.");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Falta completar campos.");
+        }
 
     }//GEN-LAST:event_btSolicitarActionPerformed
 
@@ -189,8 +214,18 @@ public class VistaCompraData extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbProveedorActionPerformed
 
+    private void btLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLimpiarActionPerformed
+        // TODO add your handling code here:
+
+        txtCantidadProducto.setText("");
+        txtPrecio.setText("");
+        jdFecha.setCalendar(null);
+
+    }//GEN-LAST:event_btLimpiarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btLimpiar;
     private javax.swing.JButton btSolicitar;
     private javax.swing.JComboBox<Producto> cbProducto;
     private javax.swing.JComboBox<Proveedor> cbProveedor;

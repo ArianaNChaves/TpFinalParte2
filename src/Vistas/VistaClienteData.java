@@ -204,6 +204,7 @@ public class VistaClienteData extends javax.swing.JInternalFrame {
         txtApellido.setText("");
         txtDireccCliente.setText("");
         txtTelefonoCliente.setText("");
+        txtIdCliente.setText("");
         JOptionPane.showMessageDialog(null, "Limpio!!");
 
     }//GEN-LAST:event_btLimpiarActionPerformed
@@ -214,23 +215,40 @@ public class VistaClienteData extends javax.swing.JInternalFrame {
         String nom = txtNombre.getText();
         String domicilio = txtDireccCliente.getText();
         String telefono = txtTelefonoCliente.getText() + "";
-        Cliente cliente = new Cliente(ape, nom, domicilio, telefono);
-        clienteData.guardarCliente(cliente);
-        txtIdCliente.setText(cliente.getIdCliente() + "");
+
+        if (ape.matches("[a-zA-Z]+") && nom.matches("[a-zA-Z]+") && domicilio.matches("[a-zA-Z]+") && telefono.matches("\\d+")) {
+            Cliente cliente = new Cliente(ape, nom, domicilio, telefono);
+            clienteData.guardarCliente(cliente);
+            txtIdCliente.setText(cliente.getIdCliente() + "");
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingrese valores válidos para los campos de apellido, nombre, domicilio y teléfono.");
+        }
+
     }//GEN-LAST:event_btAgregarClienteActionPerformed
 
     private void btModificarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btModificarClienteActionPerformed
         // TODO add your handling code here:
         if (txtIdCliente.getText() != null) {
-            int id = Integer.parseInt(txtIdCliente.getText());
+            String idText = txtIdCliente.getText();
             String nom = txtNombre.getText();
             String ape = txtApellido.getText();
             String dom = txtDireccCliente.getText();
             String tel = txtTelefonoCliente.getText() + "";
-            Cliente cliente = new Cliente(id, ape, nom, dom, tel);
-            clienteData.modificarCliente(cliente);
 
+            if (idText.matches("\\d+")) {
+                int id = Integer.parseInt(idText);
+
+                if (nom.matches("[a-zA-Z]+") && ape.matches("[a-zA-Z]+") && dom.matches("[a-zA-Z]+") && tel.matches("\\d+")) {
+                    Cliente cliente = new Cliente(id, ape, nom, dom, tel);
+                    clienteData.modificarCliente(cliente);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Ingrese valores válidos para los campos de nombre, apellido, dirección y teléfono.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Ingrese un valor numérico válido para el ID del cliente.");
+            }
         }
+
     }//GEN-LAST:event_btModificarClienteActionPerformed
 
     private void btBorrarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBorrarClienteActionPerformed
@@ -239,14 +257,21 @@ public class VistaClienteData extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btBorrarClienteActionPerformed
 
     private void btBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarClienteActionPerformed
-        int id = Integer.parseInt(txtIdCliente.getText());
-        Cliente cliente = clienteData.buscarCliente(id);
-        if (cliente != null) {
-            txtIdCliente.setText(txtIdCliente.getText());
-            txtNombre.setText(cliente.getNombre());
-            txtApellido.setText(cliente.getApellido());
-            txtDireccCliente.setText(cliente.getDomicilio());
-            txtTelefonoCliente.setText(cliente.getTelefono());
+        try {
+            int id = Integer.parseInt(txtIdCliente.getText());
+            Cliente cliente = clienteData.buscarCliente(id);
+            if (cliente != null) {
+                txtIdCliente.setText(txtIdCliente.getText());
+                txtNombre.setText(cliente.getNombre());
+                txtApellido.setText(cliente.getApellido());
+                txtDireccCliente.setText(cliente.getDomicilio());
+                txtTelefonoCliente.setText(cliente.getTelefono());
+            } else {
+                JOptionPane.showMessageDialog(null, "El cliente no existe");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Ingrese un número válido para el ID del cliente");
+            txtIdCliente.setText("");
         }
     }//GEN-LAST:event_btBuscarClienteActionPerformed
 

@@ -39,6 +39,7 @@ public class DetalleVentaData {
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 detalleVenta.setIdDetalleVenta(rs.getInt(1));
+                JOptionPane.showMessageDialog(null, "Se realizo la venta con exito.");
             } else {
 
             }
