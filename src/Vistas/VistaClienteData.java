@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
- */
+
 package Vistas;
 
 import Controller.ClienteData;
@@ -10,10 +7,7 @@ import Entity.Cliente;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author User
- */
+
 public class VistaClienteData extends javax.swing.JInternalFrame {
 
     ClienteData clienteData;
